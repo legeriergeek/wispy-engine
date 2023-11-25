@@ -17,18 +17,21 @@ import fr.nicolas.wispy.Frames.MainFrame;
 import fr.nicolas.wispy.Panels.Components.Menu.WButton;
 import fr.nicolas.wispy.Panels.Components.Menu.WPanel;
 
-public class MenuPanel extends WPanel implements MouseListener, MouseMotionListener {
+import fr.legeriergeek.wispyAPI.window;
+
+public class TestPanel extends WPanel implements MouseListener, MouseMotionListener {
 
 	private BufferedImage bg, title;
 	private Point mouseLocation = new Point(0, 0);
-	private WButton buttonStart, buttonSettings, buttonQuit;
+	private WButton buttonStart, buttonSettings, buttonQuit, buttonAutre;
 	private MainFrame mainFrame;
+    
 
-	public MenuPanel(Rectangle frameBounds, MainFrame mainFrame) {
+	public TestPanel(Rectangle frameBounds, MainFrame mainFrame) {
 		super(frameBounds);
 		this.mainFrame = mainFrame;
 
-		// Création dossier config
+		// Crï¿½ation dossier config
 		if (!new File("Wispy").exists()) {
 			new File("Wispy/worlds").mkdirs();
 		}
@@ -55,17 +58,21 @@ public class MenuPanel extends WPanel implements MouseListener, MouseMotionListe
 	private void init() {
 		this.setLayout(null);
 
-		buttonStart = new WButton("Start", new Rectangle((int) frameBounds.getWidth() / 2 - 450 / 2,
+		buttonStart = new WButton("Working!", new Rectangle((int) frameBounds.getWidth() / 2 - 450 / 2,
 				(int) frameBounds.getHeight() / 2 - 93 - 110, 450, 93));
 		buttonSettings = new WButton("Settings", new Rectangle((int) frameBounds.getWidth() / 2 - 450 / 2,
 				(int) frameBounds.getHeight() / 2 - 93, 450, 93));
 		buttonQuit = new WButton("Quit", new Rectangle((int) frameBounds.getWidth() / 2 - 450 / 2,
 				(int) frameBounds.getHeight() / 2 - 93 - 110, 450, 93));
+        buttonAutre = new WButton("Autre", new Rectangle((int) frameBounds.getWidth() / 2 - 450 / 2,
+				(int) frameBounds.getHeight() / 2 - 93 - 110, 450, 93));
+
 
 		add(buttonStart);
 		add(buttonSettings);
+        add(buttonAutre);
 		add(buttonQuit);
-
+    
 		setFrameBounds(frameBounds);
 	}
 
@@ -102,7 +109,10 @@ public class MenuPanel extends WPanel implements MouseListener, MouseMotionListe
 				System.out.println(2);
 			} else if (buttonQuit.mouseClick(mouseLocation)) {
 				System.exit(0);
-			}
+			} else if (buttonAutre.mouseClick(mouseLocation)) {
+                window.setWindowSize(1280, 720);
+
+            }
 		}
 
 		repaint();
@@ -116,6 +126,7 @@ public class MenuPanel extends WPanel implements MouseListener, MouseMotionListe
 		buttonStart.mouseMove(mouseLocation);
 		buttonSettings.mouseMove(mouseLocation);
 		buttonQuit.mouseMove(mouseLocation);
+        buttonAutre.mouseMove(mouseLocation);
 
 		repaint();
 	}
@@ -126,6 +137,7 @@ public class MenuPanel extends WPanel implements MouseListener, MouseMotionListe
 		buttonStart.mouseMove(mouseLocation);
 		buttonSettings.mouseMove(mouseLocation);
 		buttonQuit.mouseMove(mouseLocation);
+        buttonAutre.mouseMove(mouseLocation);
 
 		repaint();
 	}
@@ -147,9 +159,14 @@ public class MenuPanel extends WPanel implements MouseListener, MouseMotionListe
 				(int) frameBounds.getHeight() / 2 - newHeight + 190 * (int) frameBounds.getHeight() / 700, newWidth,
 				newHeight));
 
+        buttonAutre.changeBounds(new Rectangle((int) frameBounds.getWidth() / 2 - newWidth / 2,
+				(int) frameBounds.getHeight() / 2 - newHeight + 310 * (int) frameBounds.getHeight() / 700, newWidth,
+				newHeight));
+
 		buttonStart.reSize(40 * ((int) frameBounds.getWidth() * (int) frameBounds.getHeight()) / 1200000);
 		buttonSettings.reSize(40 * ((int) frameBounds.getWidth() * (int) frameBounds.getHeight()) / 1200000);
 		buttonQuit.reSize(40 * ((int) frameBounds.getWidth() * (int) frameBounds.getHeight()) / 1200000);
+        buttonAutre.reSize(40 * ((int) frameBounds.getWidth() * (int) frameBounds.getHeight()) / 1200000);
 	}
 
 }

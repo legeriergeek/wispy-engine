@@ -12,11 +12,19 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class WButton extends JPanel {
-	private BufferedImage icon, iconHovered;
+	public BufferedImage icon, iconHovered;
 	private Rectangle button;
 	private boolean isHovered = false;
 	private String text;
 	private int size = 40;
+	public static String font = "Arial";
+	public static int r = 0;
+	public static int gc = 0;
+	public static int b = 0;
+	public static int a = 0;
+	public static String defaultImage = "default";
+	public static String hoveredImage = "defaultHovered";
+	
 
 	public WButton(String text, Rectangle bounds) {
 		this.text = text;
@@ -29,14 +37,14 @@ public class WButton extends JPanel {
 		loadImages(iconName);
 	}
 
-	private void loadImages(String iconName) {
+	private void loadImages( String iconName) {
 		try {
-			icon = ImageIO.read(getClass().getResource("res/buttons/" + iconName + ".png"));
+			icon = ImageIO.read(getClass().getResource("res/buttons/" + defaultImage + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try {
-			iconHovered = ImageIO.read(getClass().getResource("res/buttons/" + iconName + "Hovered.png"));
+			iconHovered = ImageIO.read(getClass().getResource("res/buttons/" + hoveredImage + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -90,8 +98,8 @@ public class WButton extends JPanel {
 			g.drawImage(icon, 0, 0, this.getWidth(), this.getHeight(), null);
 		}
 		
-		g.setColor(new Color(255, 255, 255, 180));
-		g.setFont(new Font("Arial", Font.PLAIN, size));
+		g.setColor(new Color(r, gc, b, a));
+		g.setFont(new Font(font, Font.PLAIN, size));
 		g.drawString(text, this.getWidth() / 2 - g.getFontMetrics().stringWidth(text)/2, this.getHeight() / 2 +2*size/6);
 	}
 }
