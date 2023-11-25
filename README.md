@@ -1,3 +1,6 @@
+#⚠️You are in the dev branch!⚠️
+**Ok, but, what is the dev branch?** I have a simple awnser: We dont talk about the Dev branch. No, i'm joking (: ! It's basically mean that's what you will download from here is on developpement and it's not made for being use.
+
 # 🎮 Wispy Engine
 **Concept:** Wispy engine is a game engine based on the one of [Wispy](https://github.com/Aywen1/wispy)
 
