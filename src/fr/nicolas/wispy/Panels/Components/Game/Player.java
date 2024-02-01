@@ -1,7 +1,10 @@
 package fr.nicolas.wispy.Panels.Components.Game;
 
+import fr.nicolas.wispy.*;
+import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import fr.nicolas.wispy.Panels.GamePanel;
@@ -12,8 +15,11 @@ public class Player extends Rectangle {
 	private BufferedImage playerStopImg, playerWalk1Img, playerWalk2Img;
 	private boolean isFalling = false, isJumping = false, isWalking = false, isToRight = true, canGoLeft = true,
 			canGoRight = true, canGoUp = true;
-	private int jumpNum = 1, walkNum = 0;
+	private int jumpNum = 0, walkNum = 0;
+	int help = 1;
+
 	private GamePanel gamePanel;
+	public static KeyEvent e;
 
 	public Player(BufferedImage playerStopImg, BufferedImage playerWalk1Img, BufferedImage playerWalk2Img,
 			GamePanel gamePanel) {
@@ -30,7 +36,7 @@ public class Player extends Rectangle {
 				gamePanel.getHeight(), gamePanel.getNewBlockWidth(), gamePanel.getNewBlockHeight(), playerWidth,
 				playerHeight, playerX, playerY, gamePanel, null);
 
-		// Déplacements
+		// Dï¿½placements
 		if (isWalking) {
 			if (isToRight && canGoRight) {
 				walkNum++;
@@ -66,52 +72,49 @@ public class Player extends Rectangle {
 			walkNum = 1;
 		}
 
-		// Jump
-		if (isJumping && canGoUp) {
-			if (jumpNum != 15) {
-				for (int i = 0; i < 8 - jumpNum / 2; i++) {
-					if (canGoUp) {
-						y -= 1;
+		// fly
+
+				if (GamePanel.TuezMoi == true )  {
+					y--;
 						gamePanel.getMapManager().refreshPaintAllDisplayedBlocks(null, RefreshPaintMap.COLLISION,
 								gamePanel.getWidth(), gamePanel.getHeight(), gamePanel.getNewBlockWidth(),
 								gamePanel.getNewBlockHeight(), playerWidth, playerHeight, playerX, playerY, gamePanel,
 								null);
-					} else {
-						break;
-					}
+
+
 				}
-				jumpNum++;
-			} else {
-				jumpNum = 1;
-				isJumping = false;
-			}
+				else{
+
+				}
+
+		//Sneak
+		if (GamePanel.Sneak == true )  {
+			y++;
+			gamePanel.getMapManager().refreshPaintAllDisplayedBlocks(null, RefreshPaintMap.COLLISION,
+					gamePanel.getWidth(), gamePanel.getHeight(), gamePanel.getNewBlockWidth(),
+					gamePanel.getNewBlockHeight(), playerWidth, playerHeight, playerX, playerY, gamePanel,
+					null);
+
+
 		}
+		else{
+
+		}
+
+
 
 		if (!canGoUp) {
-			jumpNum = 1;
-			isJumping = false;
+			canGoUp = true;
+			isJumping = true;
 		}
 
-		// Gravité
-		if (isFalling && !isJumping) {
-			for (int i = 0; i < 4; i++) {
-				if (isFalling) {
-					y += 1;
-					gamePanel.getMapManager().refreshPaintAllDisplayedBlocks(null, RefreshPaintMap.COLLISION,
-							gamePanel.getWidth(), gamePanel.getHeight(), gamePanel.getNewBlockWidth(),
-							gamePanel.getNewBlockHeight(), playerWidth, playerHeight, playerX, playerY, gamePanel,
-							null);
-				} else {
-					break;
-				}
-			}
-		}
+
 
 	}
 
 	public void paint(Graphics g, int x, int y, int width, int height) {
 		// TODO: iswalking inutilisable car toujours faux donc frame playerStopImg n'est
-		// pas affiché (toujours walk)
+		// pas affichï¿½ (toujours walk)
 		if (isJumping) {
 			drawImg(g, playerWalk2Img, x, y, width, height);
 		} else if (isFalling || !isWalking || !canGoRight || !canGoLeft) {
@@ -144,7 +147,7 @@ public class Player extends Rectangle {
 	}
 
 	public void setJumping(boolean isJumping) {
-		if (isJumping && !isFalling) {
+		if (isJumping) {
 			this.isJumping = isJumping;
 		}
 	}

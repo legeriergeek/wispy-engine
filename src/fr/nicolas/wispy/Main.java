@@ -1,5 +1,5 @@
 package fr.nicolas.wispy;
-import fr.legeriergeek.wispyAPI.button;
+import     fr.legeriergeek.wispyAPI.button;
 import fr.legeriergeek.wispyAPI.scene;
 import fr.legeriergeek.wispyAPI.window;
 import fr.nicolas.wispy.Frames.MainFrame;

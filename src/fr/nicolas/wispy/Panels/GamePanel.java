@@ -11,6 +11,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import fr.nicolas.wispy.Panels.Components.Game.Player;
+
 import javax.imageio.ImageIO;
 
 import fr.nicolas.wispy.Runner;
@@ -30,6 +32,9 @@ public class GamePanel extends WPanel implements KeyListener, MouseListener, Mou
 	private BufferedImage sky;
 	private Player player;
 	private Point mouseLocation;
+
+	public static boolean TuezMoi;
+	public static boolean Sneak;
 
 	private boolean keyDPressed = false, keyQPressed = false, keySpacePressed = false, isEscapeMenuOpen = false;
 
@@ -57,13 +62,13 @@ public class GamePanel extends WPanel implements KeyListener, MouseListener, Mou
 			e.printStackTrace();
 		}
 
-		// Création/Chargement nouveau monde
+		// Crï¿½ation/Chargement nouveau monde
 		mapManager = new MapManager(player);
 		mapManager.loadWorld("TestWorld");
 
 		// Lancement des threads
 		runner = new Runner(this); // Actualiser les blocs puis les textures
-		mapManager.newLoadingMapThread(runner, this); // Charger et décharger les maps
+		mapManager.newLoadingMapThread(runner, this); // Charger et dï¿½charger les maps
 
 		setFrameBounds(new Rectangle(MainFrame.INIT_WIDTH, MainFrame.INIT_HEIGHT));
 	}
@@ -110,15 +115,15 @@ public class GamePanel extends WPanel implements KeyListener, MouseListener, Mou
 
 		if (keySpacePressed) {
 			player.setJumping(true);
-			keySpacePressed = false;
+			keySpacePressed = true;
 		}
 
-		player.refresh(playerX, playerY, playerWidth, playerHeight);
+		player.refresh(playerX, playerY, playerWidth, playerHeight );
 	}
 
 	public void paintComponent(Graphics g) {
 		g.drawImage(sky, 0, 0, this.getWidth(), this.getHeight(), null);
-		// Le paint des blocs intègre le test de collision avec le joueur
+		// Le paint des blocs intï¿½gre le test de collision avec le joueur
 		mapManager.refreshPaintAllDisplayedBlocks(g, RefreshPaintMap.PAINT, this.getWidth(), this.getHeight(),
 				newBlockWidth, newBlockHeight, 0, 0, 0, 0, this, null);
 		player.paint(g, playerX, playerY, playerWidth, playerHeight);
@@ -172,7 +177,11 @@ public class GamePanel extends WPanel implements KeyListener, MouseListener, Mou
 			keyQPressed = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			TuezMoi = true;
 			keySpacePressed = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_SHIFT){
+			Sneak = true;
 		}
 	}
 
@@ -182,6 +191,13 @@ public class GamePanel extends WPanel implements KeyListener, MouseListener, Mou
 		} else if (e.getKeyCode() == KeyEvent.VK_Q) {
 			keyQPressed = false;
 		}
+		else if (e.getKeyCode() == KeyEvent.VK_SPACE){
+			TuezMoi = false;
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_SHIFT){
+			Sneak = false;
+		}
+
 	}
 
 	public void keyTyped(KeyEvent e) {
