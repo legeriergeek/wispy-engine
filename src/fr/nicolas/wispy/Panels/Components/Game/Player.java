@@ -83,9 +83,7 @@ public class Player extends Rectangle {
 
 
 				}
-				else{
 
-				}
 
 		//Sneak
 		if (GamePanel.Sneak == true )  {
@@ -97,9 +95,7 @@ public class Player extends Rectangle {
 
 
 		}
-		else{
 
-		}
 
 
 
